@@ -3,8 +3,6 @@
 
 Welcome to the BugReplay FullStack documentation. This repository contains all the information you need to get started using the FullStack api, along with a working demo project that you can fork and deploy to test things out and get familiar with how things work.
 
-## Getting Started
-
 In order to get started you will need a BugReplay account with FullStack enabled.
 
 First of all fork and clone this repository. Then cd into bugreplay-fullstack-example and run the following command:
@@ -31,6 +29,6 @@ This will run an express server on localhost:8000 (and if you choose to run the 
 
 ## Documentation
 
-You can find extensive documentation here 
+Everything you need to use the FullStack api
 
 * [Documentation](https://github.com/BugReplay/bugreplay-fullstack-example/wiki/home)
