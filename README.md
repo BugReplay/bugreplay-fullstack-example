@@ -20,7 +20,6 @@ if you need the react frontend to test your calls
  To reach the express server from your BugReplay web app it will need to be on a reachable url so you could either use a tunnel like ngrok.io or you could very easily deploy it online on a service like heroku.com
  
 
-
 # API Setup
 
 The "Callback url"
@@ -28,8 +27,7 @@ The "Callback url"
 once you've set up an ngrok proxy to localhost:8000 you need to go online into your web app https://app.bugreplay.com/#/settings and click on the "Fullstack" tab. 
 If you don't see the Fullstack tab make sure you have the fullstack addon enabled for the client/email you are using to log in. You will need to set the callback url in the settings page, together with a secret of your choice. You will check that the secret is valid in your server side code on the callback method you immplement. We have a callback method here in the code to get you started and to show how things can be setup. A callback url is needed so that BugReplay can communicate the uuid of the new recording that the extension is making. This uuid will be sent back to the bugreplay api during the "Send" method.
 
-The "Send" method
-
+[Callback documentation](https://github.com/BugReplay/bugreplay-fullstack-example/wiki/send-method)
 
 
 # Deploying the demo app online for testing
