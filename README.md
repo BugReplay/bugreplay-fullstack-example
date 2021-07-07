@@ -11,15 +11,21 @@ In order to get started you will need a BugReplay account with FullStack enabled
 
 First of all fork and clone this repository. Then cd into bugreplay-fullstack-example and run the following command:
 
-```npm install
+```
+npm install
+```
 
 And on two different shell tabs do:
 
-```npm run start
+```
+npm run start
+```
 
 to run the api code that will mimic your server code and
 
-```npm run start-demo
+```
+npm run start-demo
+```
 
 if you need the react frontend to test your calls
 
