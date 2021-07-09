@@ -40,7 +40,7 @@ const MainForm = (props) => {
         formData.append('api_key', apiKey);
         formData.append('json_request', JSON.stringify(requestBody));
 
-        fetch('/_send', {
+        fetch('/test_send', {
             method: 'POST',
             body: new URLSearchParams({
                 'api_key': apiKey,
