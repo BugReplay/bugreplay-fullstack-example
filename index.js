@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || "8000";
-let API_URL = process.env.BUGREPLAY_API_URL || "http://localhost:8080" // || "https://app.bugreplay.com"
+let API_URL = process.env.BUGREPLAY_API_URL || "https://app.bugreplay.com"
 const fetch = require('node-fetch');
 const path = require('path')
 let SECRET = process.env.SECRET || "secret"
@@ -37,7 +37,7 @@ app.post('/test_send', async (req, res) => {
         })
     }
 
-    var brHeader = req.header('BugReplay-Recording-UUID')
+    var brHeader = req.header('BugReplay-Recording-UUID'.toLowerCase())
     if (brHeader) {
         console.log("We have a BugReplayRecordingUUID: " + brHeader)
     } else {
@@ -47,7 +47,7 @@ app.post('/test_send', async (req, res) => {
         })
     }
 
-    theJSON.uuid = currentUUID
+    theJSON.uuid = brHeader
     theJSON.timestamp = Date.now()
 
     const rawResponse = await fetch(`${API_URL}/api/fullstack/v1/send`, {
