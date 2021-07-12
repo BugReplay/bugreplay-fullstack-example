@@ -37,10 +37,8 @@ app.post('/test_send', async (req, res) => {
         })
     }
 
-    var brHeader = req.header('BugReplay-Recording-UUID'.toLowerCase())
-    if (brHeader) {
-        console.log("We have a BugReplayRecordingUUID: " + brHeader)
-    } else {
+    var brHeader = req.header('bugreplay-recording-uuid')
+    if (!brHeader) {
         return res.json({
             "success": "false",
             "error": "No BugReplay-Recording-UUID, doing nothing"
