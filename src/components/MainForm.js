@@ -7,7 +7,6 @@ import {
 import ReactJson from 'react-json-view'
 
 const MainForm = (props) => {
-
     const initialRequestJSON = {
         "type": "log",
         "level": "info",
@@ -28,13 +27,9 @@ const MainForm = (props) => {
 
     const editJSONRequest = (edit) => {
         setRequestBody(edit.updated_src)
-        // console.log(JSON.stringify(edit))
-        console.log("requestBody is now: ")
-        console.log(JSON.stringify(requestBody))
     }
 
     const send = async () => {
-
         localStorage.setItem('apiKey', apiKey);
         const formData = new FormData();
         formData.append('api_key', apiKey);
