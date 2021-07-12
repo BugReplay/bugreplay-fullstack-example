@@ -6,8 +6,6 @@ const PORT = process.env.PORT || "8000";
 let API_URL = process.env.BUGREPLAY_API_URL || "https://app.bugreplay.com"
 const fetch = require('node-fetch');
 const path = require('path')
-let SECRET = process.env.SECRET || "secret"
-var currentUUID = "";
 
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -17,11 +15,10 @@ app.get('/', (req, res) => {
 })
 
 /**
- * The send uuid api endpoint is published in your BugReplay account Settings as your "Callback URL".
- * It must be in POST and accept two parameters: 'uuid' and 'secret'. The secret is a temporary password 
- * that can be set on the BugReplay Settings page.
+ * The uuid will be passed in a specific request Header during a BugReplay Recording session.
+ * This header is "bugreplay-recording-uuid"
+ * It needs to be sent along in Post to identify the recording the server logs belong to.
  */
-
 app.post('/test_send', async (req, res) => {
 
     let apiKey = req.body.api_key
@@ -72,5 +69,5 @@ app.post('/test_send', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`BugReplay FullStack Demo app running on port ${PORT}!`)
+    console.log(`BugReplay FullStack Demo app running...`)
 });
