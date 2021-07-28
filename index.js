@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || "8000";
+const SENTRY_DSN = process.env.SENTRY_DSN || '';
 let API_URL = process.env.BUGREPLAY_API_URL || "https://app.bugreplay.com"
 const fetch = require('node-fetch');
 const path = require('path')
@@ -41,6 +42,32 @@ app.post('/test_send', async (req, res) => {
             "error": "No BugReplay-Recording-UUID, doing nothing"
         })
     }
+
+    Sentry.init({
+        dsn: ,
+
+        // Set tracesSampleRate to 1.0 to capture 100%
+        // of transactions for performance monitoring.
+        // We recommend adjusting this value in production
+        tracesSampleRate: 1.0,
+    });
+
+    const transaction = Sentry.startTransaction({
+        op: "test",
+        name: "My First Test Transaction",
+    });
+
+    setTimeout(() => {
+        try {
+            bugreplay_foo();
+        } catch (e) {
+            Sentry.setTag("bugreplay-uuid", brHeader);
+            Sentry.captureException(e);
+        } finally {
+            console.log("Finishing transaction")
+            transaction.finish();
+        }
+    }, 99)
 
     theJSON.uuid = brHeader
     theJSON.timestamp = Date.now()
