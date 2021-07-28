@@ -57,17 +57,15 @@ app.post('/test_send', async (req, res) => {
         name: "My First Test Transaction",
     });
 
-    setTimeout(() => {
-        try {
-            bugreplay_foo();
-        } catch (e) {
-            Sentry.setTag("bugreplay-uuid", brHeader);
-            Sentry.captureException(e);
-        } finally {
-            console.log("Finishing transaction")
-            transaction.finish();
-        }
-    }, 99)
+    try {
+        bugreplay_foo();
+    } catch (e) {
+        Sentry.setTag("bugreplay-uuid", brHeader);
+        Sentry.captureException(e);
+    } finally {
+        console.log("Finishing transaction")
+        transaction.finish();
+    }
 
     theJSON.uuid = brHeader
     theJSON.timestamp = Date.now()
