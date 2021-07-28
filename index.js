@@ -7,6 +7,8 @@ const SENTRY_DSN = process.env.SENTRY_DSN || '';
 let API_URL = process.env.BUGREPLAY_API_URL || "https://app.bugreplay.com"
 const fetch = require('node-fetch');
 const path = require('path')
+const Sentry = require("@sentry/node");
+const Tracing = require("@sentry/tracing");
 
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(bodyParser.urlencoded({ extended: false }))
