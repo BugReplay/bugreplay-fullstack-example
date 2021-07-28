@@ -44,7 +44,7 @@ app.post('/test_send', async (req, res) => {
     }
 
     Sentry.init({
-        dsn: ,
+        dsn: SENTRY_DSN,
 
         // Set tracesSampleRate to 1.0 to capture 100%
         // of transactions for performance monitoring.
