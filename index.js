@@ -8,7 +8,6 @@ let API_URL = process.env.BUGREPLAY_API_URL || "https://app.bugreplay.com"
 const fetch = require('node-fetch');
 const path = require('path')
 const Sentry = require("@sentry/node");
-const Tracing = require("@sentry/tracing");
 
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -68,7 +67,7 @@ app.post('/test_send', async (req, res) => {
         console.log("Finishing transaction")
         transaction.finish();
     }
-
+    console.log("[" + brHeader + "] This is a sample line that should go to Papertrail from the fullstack example app   ")
     theJSON.uuid = brHeader
     theJSON.timestamp = Date.now()
 
