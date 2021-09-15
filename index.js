@@ -4,13 +4,25 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || "8000";
 const SENTRY_DSN = process.env.SENTRY_DSN || '';
+const BUGSNAG_API_KEY = process.env.BUGSNAG_API_KEY || '';
 let API_URL = process.env.BUGREPLAY_API_URL || "https://app.bugreplay.com"
 const fetch = require('node-fetch');
 const path = require('path')
 const Sentry = require("@sentry/node");
 
+var Bugsnag = require('@bugsnag/js')
+var BugsnagPluginExpress = require('@bugsnag/plugin-express')
+
+Bugsnag.start({
+    apiKey: BUGSNAG_API_KEY,
+    plugins: [BugsnagPluginExpress]
+})
+var middleware = Bugsnag.getPlugin('express')
+
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(middleware.requestHandler)
+app.use(middleware.errorHandler)
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
@@ -67,9 +79,12 @@ app.post('/test_send', async (req, res) => {
         console.log("Finishing transaction")
         transaction.finish();
     }
+
     console.log("[" + brHeader + "] This is a sample line that should go to Papertrail from the fullstack example app   ")
     theJSON.uuid = brHeader
     theJSON.timestamp = Date.now()
+
+    Bugsnag.notify(new Error("[" + brHeader + "] This is a sample error that should go to Bugsnag from the fullstack example app   "))
 
     const rawResponse = await fetch(`${API_URL}/api/fullstack/v1/send`, {
         method: 'POST',
