@@ -13,6 +13,7 @@ const Sentry = require("@sentry/node");
 var Bugsnag = require('@bugsnag/js')
 var BugsnagPluginExpress = require('@bugsnag/plugin-express')
 
+console.log("Starting Bugsnag")
 Bugsnag.start({
     apiKey: BUGSNAG_API_KEY,
     plugins: [BugsnagPluginExpress]
@@ -55,7 +56,7 @@ app.post('/test_send', async (req, res) => {
             "error": "No BugReplay-Recording-UUID, doing nothing"
         })
     }
-
+    console.log("Initializing Sentry")
     Sentry.init({
         dsn: SENTRY_DSN,
 
@@ -69,7 +70,7 @@ app.post('/test_send', async (req, res) => {
         op: "test",
         name: "My First Test Transaction",
     });
-
+    console.log(`Notifying Sentry...`)
     try {
         bugreplay_foo();
     } catch (e) {
@@ -84,7 +85,8 @@ app.post('/test_send', async (req, res) => {
     theJSON.uuid = brHeader
     theJSON.timestamp = Date.now()
 
-    Bugsnag.notify(new Error("[" + brHeader + "] This is a sample error that should go to Bugsnag from the fullstack example app   "))
+    console.log(`Notifying Bugsnag...`)
+    Bugsnag.notify(new Error("[" + brHeader + "] This is a sample error that should go to Bugsnag from the fullstack example app"))
 
     const rawResponse = await fetch(`${API_URL}/api/fullstack/v1/send`, {
         method: 'POST',
